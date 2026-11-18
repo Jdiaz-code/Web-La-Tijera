@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Los deberes de María · Web La Tijera</title>
+<meta name="theme-color" content="#3A2C25">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --lino:#F3EEE7;--arena:#E6DCD0;--arcilla:#9A5B44;--arcilla-osc:#7E4734;
+  --salvia:#7D8B74;--tinta:#2E2622;--cafe:#3A2C25;--blanco:#FFFDF9;
+  --serif:"Cormorant Garamond",Georgia,serif;--sans:"Jost",system-ui,sans-serif;
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;font-family:var(--sans);font-weight:300;font-size:16px;line-height:1.55;color:var(--tinta);background:var(--lino);-webkit-tap-highlight-color:transparent}
+h1,h2,h3{font-family:var(--serif);font-weight:300;line-height:1.1;margin:0}
+.wrap{width:min(640px,100% - 2rem);margin-inline:auto}
+.eyebrow{font-size:.68rem;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:var(--salvia);margin:0 0 .8rem}
+
+/* Cabecera */
+.head{background:var(--cafe);color:var(--lino);padding:2.6rem 0 2.2rem;text-align:center;position:relative;overflow:hidden}
+.head .eyebrow{color:rgba(243,238,231,.7)}
+.brand-small{font-size:.6rem;letter-spacing:.32em;text-transform:uppercase;opacity:.75}
+.brand-name{font-family:var(--serif);font-size:1.3rem;margin-bottom:1.6rem}
+.head h1{font-size:clamp(2.6rem,12vw,3.6rem)}
+.head h1 em{font-style:italic;color:#E2B8A5}
+.head p.lead{margin:.9rem auto 0;max-width:30ch;opacity:.85}
+
+/* Línea en construcción: la tijera recorre el hilo */
+.cut{position:relative;height:30px;margin:1.8rem auto 0;width:min(320px,80%)}
+.cut::before{content:"";position:absolute;left:0;right:0;top:50%;border-top:1px dashed rgba(243,238,231,.45)}
+.cut .done-line{position:absolute;left:0;top:50%;height:1px;background:#E2B8A5;width:0;transition:width 1s var(--ease)}
+.cut svg{position:absolute;top:50%;width:28px;height:28px;transform:translate(-50%,-50%) rotate(90deg);left:0;transition:left 1s var(--ease);background:var(--cafe);padding:2px;fill:none;stroke:#E2B8A5;stroke-width:1.4;stroke-linecap:round}
+.status{display:flex;justify-content:center;gap:1.6rem;margin-top:1rem;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase}
+.status b{font-family:var(--serif);font-size:1.6rem;font-weight:400;letter-spacing:0;display:block;text-transform:none;color:var(--blanco)}
+
+/* Intro */
+.intro{padding:2rem 0 .5rem}
+.intro p{margin:0 0 .8rem}
+
+/* Semanas */
+.week{padding:1.8rem 0 .6rem}
+.week__head{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;border-bottom:1px solid var(--arena);padding-bottom:.7rem;margin-bottom:1rem}
+.week__head h2{font-size:2rem;color:var(--arcilla)}
+.week__dates{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--salvia);text-align:right;white-space:nowrap}
+.week__intro{margin:0 0 1rem;color:rgba(46,38,34,.8)}
+.week__count{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--arcilla)}
+
+.group{font-size:.68rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--salvia);margin:1.6rem 0 .6rem}
+
+/* Tarjeta de tarea / pregunta */
+.item{background:var(--blanco);padding:1rem 1rem 1rem 3.3rem;margin-bottom:.6rem;position:relative;border-left:2px solid transparent;transition:border-color .3s,opacity .3s}
+.item.is-done{border-left-color:var(--salvia)}
+.item.is-done .item__title{color:rgba(46,38,34,.55)}
+.item__check{position:absolute;left:1rem;top:1rem;width:24px;height:24px;border:1px solid var(--arcilla);border-radius:50%;background:none;cursor:pointer;padding:0;display:grid;place-items:center}
+.item__check svg{width:14px;height:14px;fill:none;stroke:var(--blanco);stroke-width:2;opacity:0}
+.item.is-done .item__check{background:var(--salvia);border-color:var(--salvia)}
+.item.is-done .item__check svg{opacity:1}
+.item__type{font-size:.62rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--arcilla);margin-bottom:.2rem}
+.item__title{font-size:1.02rem;font-weight:400;margin:0}
+.item__note{font-size:.9rem;color:rgba(46,38,34,.72);margin:.4rem 0 0}
+.item ul{margin:.5rem 0 0;padding-left:1.1rem;font-size:.92rem;color:rgba(46,38,34,.85)}
+.item li{margin:.2rem 0}
+
+.opts{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.7rem}
+.opt{font:inherit;font-size:.88rem;padding:.5rem .85rem;border:1px solid var(--arena);background:var(--lino);color:var(--tinta);border-radius:2px;cursor:pointer;transition:all .2s}
+.opt.is-on{background:var(--arcilla);border-color:var(--arcilla);color:var(--blanco)}
+textarea{width:100%;margin-top:.7rem;font:inherit;font-size:.92rem;padding:.6rem .7rem;border:1px solid var(--arena);background:var(--lino);color:var(--tinta);border-radius:2px;resize:vertical;min-height:2.8rem}
+textarea:focus,.opt:focus-visible,.item__check:focus-visible{outline:2px solid var(--salvia);outline-offset:2px}
+
+/* Consejos de fotos */
+.tips{background:var(--arena);padding:1.2rem 1.2rem 1rem;margin:1rem 0}
+.tips h3{font-size:1.4rem;color:var(--arcilla);margin-bottom:.5rem}
+.tips ul{margin:0;padding-left:1.1rem;font-size:.92rem}
+.tips li{margin:.3rem 0}
+
+/* Envío */
+.send{background:var(--cafe);color:var(--lino);padding:2.4rem 0 2.8rem;margin-top:2.4rem;text-align:center}
+.send h2{font-size:2rem;margin-bottom:.6rem}
+.send p{opacity:.8;margin:0 auto 1.4rem;max-width:32ch}
+.btn{display:inline-block;font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;padding:1em 1.8em;border-radius:2px;background:var(--arcilla);color:var(--blanco);border:1px solid var(--arcilla)}
+.btn:hover{background:var(--arcilla-osc)}
+.foot{text-align:center;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--salvia);padding:1.6rem 0 2.4rem}
+.saved{font-size:.75rem;color:rgba(243,238,231,.6);margin-top:1rem}
+</style>
+</head>
+<body>
+
+<header class="head">
+  <div class="brand-small">Web en construcción</div>
+  <div class="brand-name">La Tijera</div>
+  <p class="eyebrow">Plan de 2 semanas</p>
+  <h1>Los deberes<br><em>de María</em></h1>
+  <p class="lead">Lo que necesito de ti para que la web esté lista el miércoles 2 de diciembre.</p>
+  <div class="cut" aria-hidden="true">
+    <span class="done-line" id="cutLine"></span>
+    <svg id="cutScissors" viewBox="0 0 32 32"><circle cx="8" cy="24" r="4"/><circle cx="24" cy="24" r="4"/><path d="M11 21 L26 4 M21 21 L6 4"/></svg>
+  </div>
+  <div class="status">
+    <div><b id="pct">0%</b>hecho</div>
+    <div><b id="days">–</b><span id="daysLabel">días</span></div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="intro">
+    <p>Cada vez que respondas una pregunta o termines una tarea, se marca sola o la marcas tú tocando el círculo. Lo que escribas se queda guardado en tu móvil.</p>
+    <p>Al final de la página hay un botón para mandarme todo por WhatsApp.</p>
+  </section>
+  <div id="plan"></div>
+</main>
+
+<section class="send">
+  <div class="wrap">
+    <h2>¿Ya lo tienes?</h2>
+    <p>Mándame tus respuestas y lo que llevas hecho. Puedes enviarlo las veces que quieras.</p>
+    <a href="#" class="btn" id="sendBtn" target="_blank" rel="noopener">Enviar a Javi por WhatsApp</a>
+    <p class="saved" id="savedNote"></p>
+  </div>
+</section>
+<p class="foot">La Tijera · Huelin</p>
+
+<script>
+/* ---------- Plan: edita aquí tareas, preguntas y fechas ---------- */
+const DEADLINE = "2026-12-02";
+const JAVI_WHATSAPP = ""; // pon aquí tu número con prefijo (ej. 34600111222) para que el mensaje te llegue directo
+
+const PLAN = [
+  {
+    title: "Esta semana",
+    dates: "Jue 19 – Dom 22 nov",
+    intro: "Lo rápido: contestarme unas preguntas y hablar con Secretos del Agua.",
+    groups: [
+      { name: "Preguntas para responder", items: [
+        { id:"nombre", type:"choice", title:"¿Cómo quieres que aparezca el nombre en la web?",
+          options:["La Tijera","Peluquería La Tijera","BioPeluquería La Tijera"] },
+        { id:"enfoque", type:"choice", title:"¿Te encaja este enfoque?",
+          note:"La peluquería de barrio de siempre, cercana, que además te cuida el pelo con productos naturales de Secretos del Agua. Con ese valor extra, pero sin ponernos místicos ni hippies.",
+          options:["Sí, así","Sí, con algún matiz","No del todo"], comment:"Si quieres matizar algo, escríbelo aquí" },
+        { id:"historia", type:"choice", title:"¿Contamos en la web, brevemente, la historia del nombre?",
+          note:"La tienda de ropa de tu madre, que la peluquería era tu sueño, lo que te costó conseguirlo…",
+          options:["Sí","No"], comment:"Si es que sí: algún dato o anécdota que quieras que salga (años, cómo era la tienda…)" },
+        { id:"precios", type:"choice", title:"¿Quieres una sección con los servicios y sus precios?",
+          options:["Sí, con precios","Sí, con «desde X €»","No, sin precios"] },
+        { id:"datos", type:"text", title:"Datos de contacto",
+          note:"Dirección, WhatsApp para citas, horario habitual e Instagram.", placeholder:"Escríbelos aquí" }
+      ]},
+      { name: "Tareas", items: [
+        { id:"sda", type:"task", title:"Llamar o escribir a Secretos del Agua",
+          list:["¿Puedo vender sus productos en mi web? ¿Con qué condiciones (precios, envíos, requisitos)?",
+                "¿Puedo usar su logo, sus hexágonos y su imagen en mi web?",
+                "¿Puedo poner que soy un salón que trabaja con Secretos del Agua?"],
+          note:"No vamos a copiar fotos de su web: solo usar su logo y decir que trabajas con ellos, si te dejan.",
+          comment:"¿Qué te han dicho?" }
+      ]}
+    ]
+  },
+  {
+    title: "Semana de fotos",
+    dates: "Lun 23 – Dom 29 nov",
+    intro: "Las fotos del Instagram son antiguas y casi todas con mascarilla, así que no valen. He quitado las mascarillas con inteligencia artificial para ir tirando, pero lo suyo es tener fotos nuevas.",
+    tips: true,
+    groups: [
+      { name: "Fotos", items: [
+        { id:"f-equipo", type:"task", title:"Rubén y tú, guapos, posando", note:"Juntos y por separado, en el salón." },
+        { id:"f-trabajando", type:"task", title:"Rubén y tú trabajando con clientas", note:"Cortando, aplicando color, peinando. Pide permiso a la clienta." },
+        { id:"f-producto", type:"task", title:"Con productos de la estantería en la mano" },
+        { id:"f-estanteria", type:"task", title:"La estantería de productos" },
+        { id:"f-local", type:"task", title:"El local por dentro", note:"Una de ellas, en horizontal." },
+        { id:"f-patio", type:"task", title:"El patio", note:"No tiene que estar perfecto, solo que se vea bonito. Mejor también alguna en horizontal." },
+        { id:"f-trabajos", type:"task", title:"Trabajos recientes", note:"Color, rizos, recogidos… Con permiso de las clientas que salgan." }
+      ]},
+      { name: "Si dijiste que sí a los precios", items: [
+        { id:"lista-precios", type:"text", title:"Lista de servicios y precios", note:"Aunque sea a mano y luego le haces una foto.", placeholder:"Corte mujer – 00 €…" }
+      ]}
+    ]
+  },
+  {
+    title: "Recta final",
+    dates: "Lun 30 nov – Mié 2 dic",
+    intro: "Juntar todo y mandármelo.",
+    groups: [
+      { name: "Tareas", items: [
+        { id:"enviar-fotos", type:"task", title:"Mandarme todas las fotos", note:"Mejor por Google Drive o WeTransfer: WhatsApp les baja la calidad." },
+        { id:"sda-respuesta", type:"task", title:"Tener la respuesta de Secretos del Agua", note:"Si aún no te han contestado, vuelve a insistir." },
+        { id:"foto-antigua", type:"task", title:"Foto antigua de la tienda de tu madre", note:"Solo si quieres que salga la historia." },
+        { id:"enviar", type:"task", title:"Enviar todo con el botón de abajo" }
+      ]}
+    ]
+  }
+];
+
+/* ---------- Estado guardado en el móvil ---------- */
+const KEY = "deberes-maria-v1";
+let state = {};
+try { state = JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e) { state = {}; }
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e) {} update(); };
+const get = id => state[id] || (state[id] = {});
+
+const isDone = it => {
+  const s = state[it.id] || {};
+  if (it.type === "choice") return !!s.choice;
+  if (it.type === "text") return !!(s.text && s.text.trim());
+  return !!s.done;
+};
+
+const esc = t => t.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const check = `<svg viewBox="0 0 16 16"><path d="M3 8.5l3 3 7-7"/></svg>`;
+
+/* ---------- Pintar el plan ---------- */
+const root = document.getElementById("plan");
+PLAN.forEach((w, wi) => {
+  const sec = document.createElement("section");
+  sec.className = "week";
+  let html = `<div class="week__head"><h2>${w.title}</h2><div class="week__dates">${w.dates}<br><span class="week__count" data-week="${wi}"></span></div></div>`;
+  html += `<p class="week__intro">${w.intro}</p>`;
+  if (w.tips) html += `<div class="tips"><h3>Cómo hacer las fotos</h3><ul>
+      <li>Con luz natural: de día y cerca de la puerta o de una ventana.</li>
+      <li>Limpia la lente del móvil antes de empezar.</li>
+      <li>Nada de zoom: mejor acércate tú.</li>
+      <li>La mayoría pueden ir en vertical (la web en el móvil va deslizando de lado). Pero haz <b>al menos una en horizontal</b> del local o del patio, para el ordenador.</li>
+      <li>Haz varias de cada cosa: luego elegimos la mejor.</li></ul></div>`;
+  w.groups.forEach(g => {
+    html += `<p class="group">${g.name}</p>`;
+    g.items.forEach(it => {
+      const s = state[it.id] || {};
+      const label = it.type === "task" ? "Tarea" : "Pregunta";
+      html += `<article class="item" data-id="${it.id}">
+        <button class="item__check" aria-label="Marcar como hecho">${check}</button>
+        <div class="item__type">${label}</div>
+        <h3 class="item__title">${it.title}</h3>
+        ${it.note ? `<p class="item__note">${it.note}</p>` : ""}
+        ${it.list ? `<ul>${it.list.map(l => `<li>${l}</li>`).join("")}</ul>` : ""}
+        ${it.options ? `<div class="opts">${it.options.map(o => `<button class="opt${s.choice===o?" is-on":""}" data-opt="${esc(o)}">${o}</button>`).join("")}</div>` : ""}
+        ${it.type === "text" ? `<textarea data-field="text" placeholder="${it.placeholder||""}" rows="3">${esc(s.text||"")}</textarea>` : ""}
+        ${it.comment ? `<textarea data-field="comment" placeholder="${it.comment}" rows="2">${esc(s.comment||"")}</textarea>` : ""}
+      </article>`;
+    });
+  });
+  sec.innerHTML = html;
+  root.appendChild(sec);
+});
+
+const ALL = PLAN.flatMap(w => w.groups.flatMap(g => g.items));
+const byId = Object.fromEntries(ALL.map(i => [i.id, i]));
+
+root.addEventListener("click", e => {
+  const card = e.target.closest(".item"); if (!card) return;
+  const it = byId[card.dataset.id], s = get(it.id);
+  if (e.target.closest(".opt")) {
+    const o = e.target.closest(".opt").dataset.opt;
+    s.choice = s.choice === o ? "" : o;
+    card.querySelectorAll(".opt").forEach(b => b.classList.toggle("is-on", b.dataset.opt === s.choice));
+    save();
+  } else if (e.target.closest(".item__check")) {
+    if (it.type === "task") { s.done = !s.done; save(); }
+    else card.querySelector(".opt, textarea")?.focus();
+  }
+});
+root.addEventListener("input", e => {
+  const ta = e.target.closest("textarea"); if (!ta) return;
+  const it = byId[ta.closest(".item").dataset.id];
+  get(it.id)[ta.dataset.field] = ta.value;
+  save();
+});
+
+/* ---------- Progreso, cuenta atrás y mensaje ---------- */
+function update() {
+  ALL.forEach(it => document.querySelector(`.item[data-id="${it.id}"]`).classList.toggle("is-done", isDone(it)));
+  PLAN.forEach((w, wi) => {
+    const items = w.groups.flatMap(g => g.items);
+    const d = items.filter(isDone).length;
+    document.querySelector(`[data-week="${wi}"]`).textContent = d === items.length ? "Completa" : `${d} de ${items.length}`;
+  });
+  const done = ALL.filter(isDone).length;
+  const pct = Math.round(done / ALL.length * 100);
+  document.getElementById("pct").textContent = pct + "%";
+  document.getElementById("cutLine").style.width = pct + "%";
+  document.getElementById("cutScissors").style.left = pct + "%";
+  document.getElementById("sendBtn").href = `https://wa.me/${JAVI_WHATSAPP}?text=${encodeURIComponent(buildMessage(done, pct))}`;
+}
+
+function buildMessage(done, pct) {
+  let m = `*Deberes web La Tijera* — ${done} de ${ALL.length} hechas (${pct}%)\n`;
+  PLAN.forEach(w => {
+    m += `\n*${w.title.toUpperCase()}*\n`;
+    w.groups.flatMap(g => g.items).forEach(it => {
+      const s = state[it.id] || {};
+      m += `${isDone(it) ? "[x]" : "[ ]"} ${it.title}`;
+      if (s.choice) m += `: ${s.choice}`;
+      m += "\n";
+      if (s.text && s.text.trim()) m += `   ${s.text.trim()}\n`;
+      if (s.comment && s.comment.trim()) m += `   ${s.comment.trim()}\n`;
+    });
+  });
+  return m;
+}
+
+(function countdown() {
+  const today = new Date(); today.setHours(0,0,0,0);
+  const end = new Date(DEADLINE + "T00:00:00");
+  const n = Math.round((end - today) / 86400000);
+  document.getElementById("days").textContent = n > 0 ? n : "¡Ya!";
+  document.getElementById("daysLabel").textContent = n === 1 ? "día" : n > 0 ? "días" : "fecha límite";
+})();
+
+try { localStorage.setItem("__t","1"); localStorage.removeItem("__t");
+  document.getElementById("savedNote").textContent = "Tu progreso se guarda en este móvil.";
+} catch(e) {
+  document.getElementById("savedNote").textContent = "Este navegador no guarda el progreso: envíalo antes de cerrar la página.";
+}
+update();
+</script>
+</body>
+</html>
